@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:padding="16dp"
+              tools:context=".activities.OrderDetailActivity">
+
+    <EditText
+            android:id="@+id/edit_text_client"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/order_detail_client"
+            android:inputType="text"
+            tools:ignore="AutoFill"/>
+
+    <RadioGroup
+            android:id="@+id/radioSalesCondition"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+        <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/order_detail_cash"
+                android:checked="true"
+                android:id="@+id/radCash"/>
+
+        <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/order_detail_account"
+                android:id="@+id/radCc"/>
+        <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/order_detail_check"
+                android:id="@+id/radCheck"/>
+        <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/order_detail_others"
+                android:id="@+id/radOther"/>
+    </RadioGroup>
+
+
+    <EditText
+            android:id="@+id/edit_text_comments"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/order_detail_comments"
+            android:inputType="text"
+            android:maxLength="15"
+            tools:ignore="AutoFill"/>
+
+
+    <EditText
+            android:id="@+id/edit_text_total"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/order_detail_total"
+            android:inputType="numberDecimal"
+            tools:ignore="AutoFill"/>
+
+</LinearLayout>
