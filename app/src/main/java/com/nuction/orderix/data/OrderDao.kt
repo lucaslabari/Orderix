@@ -7,16 +7,13 @@ import androidx.room.*
 interface OrderDao {
 
     @Insert
-    fun insert(order: Order)
+    suspend fun insert(order: Order)
 
     @Update
-    fun update(order: Order)
+    suspend fun update(order: Order)
 
     @Delete
-    fun delete(order: Order)
-
-    @Query("DELETE FROM `order`")
-    fun deleteAllOrders()
+    suspend fun delete(order: Order)
 
     @Query("SELECT * FROM `order` ORDER BY id ASC")
     fun getAllOrders(): LiveData<List<Order>>

@@ -16,11 +16,13 @@ import com.nuction.orderix.viewmodels.OrderViewModel
 import kotlinx.android.synthetic.main.activity_order_list.*
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.ItemTouchHelper
+import org.koin.androidx.viewmodel.ext.viewModel
 
 
 class OrderListActivity : AppCompatActivity(), OrderAdapter.OnItemClickListener {
 
-    private lateinit var orderViewModel: OrderViewModel
+    // Koin provides OrderViewModel dependency
+    private val orderViewModel: OrderViewModel by viewModel()
     private lateinit var orderAdapter: OrderAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,8 +34,7 @@ class OrderListActivity : AppCompatActivity(), OrderAdapter.OnItemClickListener 
         orderAdapter = OrderAdapter()
         recycler_view.adapter = orderAdapter
 
-        // ViewModel
-        orderViewModel = ViewModelProviders.of(this).get(OrderViewModel::class.java)
+        // ViewModel and LiveData
         orderViewModel.getAllOrders().observe(this, Observer<List<Order>> {
             orderAdapter.setOrders(it)
         })

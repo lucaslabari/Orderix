@@ -10,24 +10,4 @@ abstract class AppDatabase : RoomDatabase() {
 
     abstract fun orderDao(): OrderDao
 
-    companion object {
-
-        private var instance: AppDatabase? = null
-
-        fun getInstance(context: Context): AppDatabase? {
-            if (instance == null) {
-                synchronized(AppDatabase::class) {
-                    instance = Room.databaseBuilder(
-                        context.getApplicationContext(),
-                        AppDatabase::class.java, "orderix.db"
-                    )
-                        .allowMainThreadQueries()
-                        .fallbackToDestructiveMigration()
-                        .build()
-                }
-            }
-            return instance
-        }
-
-    }
 }
