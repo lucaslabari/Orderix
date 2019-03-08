@@ -1,7 +1,6 @@
 package com.nuction.orderix.data
 
 import androidx.lifecycle.LiveData
-import kotlinx.coroutines.Job
 
 interface OrderRepository {
 

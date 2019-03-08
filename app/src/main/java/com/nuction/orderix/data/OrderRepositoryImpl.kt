@@ -3,7 +3,8 @@ package com.nuction.orderix.data
 import androidx.lifecycle.LiveData
 import kotlinx.coroutines.*
 
-class OrderRepositoryImpl(private val orderDao: OrderDao) : OrderRepository {
+class OrderRepositoryImpl(private val orderDao: OrderDao) :
+    OrderRepository {
 
     override fun insert(order: Order) {
         runBlocking {

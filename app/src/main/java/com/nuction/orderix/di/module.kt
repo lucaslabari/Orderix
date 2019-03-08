@@ -23,11 +23,12 @@ val appModule = module {
 
     single { get<AppDatabase>().orderDao() }
 
-    // OrderRepository
-    //factory<OrderRepository> { OrderRepositoryImpl(get()) }
-
     // single instance of OrderRepository
-    single<OrderRepository> { OrderRepositoryImpl(get()) }
+    single<OrderRepository> {
+        OrderRepositoryImpl(
+            get()
+        )
+    }
 
     // OrderViewModel ViewModel
     viewModel { OrderViewModel(get()) }

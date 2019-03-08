@@ -16,5 +16,7 @@
     <string name="list_item_order_total_text">$ 531.33</string>
     <string name="list_item_order_client_text">Lucas Labari</string>
     <string name="list_item_order_comments_text">Comments</string>
+    <string name="search_label">Search</string>
+    <string name="search_hint">Search</string>
 
 </resources>
