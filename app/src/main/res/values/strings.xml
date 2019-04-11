@@ -18,5 +18,7 @@
     <string name="list_item_order_comments_text">Comments</string>
     <string name="search_label">Search</string>
     <string name="search_hint">Search</string>
-
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_item_orders_list">Orders</string>
 </resources>

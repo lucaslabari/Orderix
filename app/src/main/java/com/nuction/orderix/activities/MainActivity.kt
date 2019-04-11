@@ -7,22 +7,30 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.Toolbar
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nuction.orderix.R
 import com.nuction.orderix.data.Order
 import com.nuction.orderix.utils.Constants
-import kotlinx.android.synthetic.main.activity_order_list.*
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.ItemTouchHelper
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.navigation.NavigationView
 import com.nuction.orderix.adapters.OrderAdapter
 import com.nuction.orderix.viewmodels.OrderViewModel
-import org.koin.androidx.viewmodel.ext.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class OrderListActivity : AppCompatActivity(), OrderAdapter.OnItemClickListener {
+class MainActivity : AppCompatActivity(), OrderAdapter.OnItemClickListener,
+    NavigationView.OnNavigationItemSelectedListener {
 
     // Koin provides OrderViewModel dependency
     private val orderViewModel: OrderViewModel by viewModel()
@@ -31,35 +39,58 @@ class OrderListActivity : AppCompatActivity(), OrderAdapter.OnItemClickListener 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_order_list)
+        setContentView(R.layout.activity_main)
+
+        // Set Toolbar
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+
+        // Floating Button. Add Order.
+        val fab = findViewById<FloatingActionButton>(R.id.button_add_order)
+        fab.setOnClickListener {
+            resetSearchView()
+            val intent = Intent(this@MainActivity, OrderDetailActivity::class.java)
+            startActivityForResult(intent, Constants.INTENT_CREATE_ORDER)
+        }
 
         // Set adapter to Recycle View
-        recycler_view.layoutManager = LinearLayoutManager(this)
+        val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
+        recyclerView.layoutManager = LinearLayoutManager(this)
         orderAdapter = OrderAdapter()
-        recycler_view.adapter = orderAdapter
+        recyclerView.adapter = orderAdapter
 
         // ViewModel and LiveData
         orderViewModel.getAllOrders().observe(this, Observer<List<Order>> {
             orderAdapter.setOrders(it)
         })
 
-        // Floating Button. Add Order.
-        button_add_order.setOnClickListener() {
-            resetSearchView()
-            val intent = Intent(this@OrderListActivity, OrderDetailActivity::class.java)
-            startActivityForResult(intent, Constants.INTENT_CREATE_ORDER)
-        }
+        val drawer = findViewById(R.id.drawer_layout) as DrawerLayout
+        val toggle = ActionBarDrawerToggle(
+            this, drawer, toolbar, R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
+        )
+        drawer.addDrawerListener(toggle)
+        toggle.syncState()
+
+        val navigationView = findViewById(R.id.nav_view) as NavigationView
+        navigationView.setNavigationItemSelectedListener(this)
+
 
         // OnItemSwiped => delete the order.
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
-            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
                 return false
             }
+
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 orderViewModel.delete(orderAdapter.getOrderAt(viewHolder.adapterPosition))
-                Toast.makeText(this@OrderListActivity, "Order deleted", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@MainActivity, "Order deleted", Toast.LENGTH_SHORT).show()
             }
-        }).attachToRecyclerView(recycler_view)
+        }).attachToRecyclerView(recyclerView)
 
 
         // OnItemClick => open the order to edit.
@@ -75,8 +106,10 @@ class OrderListActivity : AppCompatActivity(), OrderAdapter.OnItemClickListener 
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         searchView = menu?.findItem(R.id.search_order)
             ?.actionView as SearchView
-        searchView.setSearchableInfo(searchManager
-            .getSearchableInfo(componentName))
+        searchView.setSearchableInfo(
+            searchManager
+                .getSearchableInfo(componentName)
+        )
         searchView.maxWidth = Integer.MAX_VALUE
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -94,11 +127,32 @@ class OrderListActivity : AppCompatActivity(), OrderAdapter.OnItemClickListener 
     }
 
     /**
+     * Handles a navigation drawer item click. It detects which item was
+     * clicked and displays a toast message showing which item.
+     * @param item  Item in the navigation drawer
+     * @return      Returns true after closing the nav drawer
+     */
+    @Override
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        val drawer = findViewById(R.id.drawer_layout) as DrawerLayout
+        // Handle navigation view item clicks here.
+        return when (item.getItemId()) {
+            R.id.nav_orders -> {
+                // Handle the show orders list action.
+                drawer.closeDrawer(GravityCompat.START)
+                displayToast(getString(R.string.navigation_drawer_item_orders_list))
+                true
+            }
+            else -> false
+        }
+    }
+
+    /**
      * OnItemClick => open the order to edit.
      */
     override fun onItemClick(order: Order) {
         resetSearchView()
-        val intent = Intent(this@OrderListActivity, OrderDetailActivity::class.java)
+        val intent = Intent(this@MainActivity, OrderDetailActivity::class.java)
         intent.putExtra(Constants.INTENT_OBJECT, order)
         startActivityForResult(intent, Constants.INTENT_UPDATE_ORDER)
     }
@@ -138,10 +192,23 @@ class OrderListActivity : AppCompatActivity(), OrderAdapter.OnItemClickListener 
     }
 
     /**
-     * Back Button Pressed
+     * Handles the Back button: closes the nav drawer.
      */
     override fun onBackPressed() {
-        resetSearchView()
-        super.onBackPressed()
+        val drawer = findViewById(R.id.drawer_layout) as DrawerLayout
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START)
+        } else {
+            resetSearchView()
+            super.onBackPressed()
+        }
+    }
+
+    /**
+     * Displays a toast message.
+     * @param message   Message to display in toast
+     */
+    private fun displayToast(message: String) {
+        Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
     }
 }

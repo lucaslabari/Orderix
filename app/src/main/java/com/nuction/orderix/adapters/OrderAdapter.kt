@@ -30,7 +30,7 @@ class OrderAdapter : RecyclerView.Adapter<OrderAdapter.OrderHolder>(), Filterabl
     override fun getItemCount(): Int = filteredOrdersList.size
 
     fun getOrderAt(position: Int): Order {
-        return orders.get(position)
+        return orders[position]
     }
 
     fun setOrders(orders: List<Order>) {

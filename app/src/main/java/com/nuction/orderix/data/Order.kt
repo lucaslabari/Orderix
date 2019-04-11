@@ -11,7 +11,7 @@ import kotlinx.android.parcel.Parcelize
  * @since 22/02/19
  */
 @Parcelize()
-@Entity(tableName = "order")
+@Entity()
 data class Order (@PrimaryKey(autoGenerate = true) val id: Long?,
                   @ColumnInfo(name = "client_name") val clientName: String,
                   @ColumnInfo(name = "sales_condition") val salesCondition: Int,

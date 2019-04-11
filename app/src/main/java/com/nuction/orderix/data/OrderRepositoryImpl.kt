@@ -30,6 +30,14 @@ class OrderRepositoryImpl(private val orderDao: OrderDao) :
         }
     }
 
+    override fun deleteAllOrders() {
+        runBlocking {
+            this.launch(Dispatchers.IO) {
+                orderDao.deleteAllOrders()
+            }
+        }
+    }
+
     override fun getAllOrders(): LiveData<List<Order>> {
         return orderDao.getAllOrders()
     }

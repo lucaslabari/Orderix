@@ -15,6 +15,9 @@ interface OrderDao {
     @Delete
     suspend fun delete(order: Order)
 
-    @Query("SELECT * FROM `order` ORDER BY id ASC")
+    @Query("DELETE FROM 'order'")
+    suspend fun deleteAllOrders()
+
+    @Query("SELECT * FROM 'order' ORDER BY id ASC")
     fun getAllOrders(): LiveData<List<Order>>
 }

@@ -20,6 +20,10 @@ class OrderViewModel(private val repository: OrderRepository) : ViewModel() {
         repository.delete(order)
     }
 
+    fun deleteAllOrders() {
+        repository.deleteAllOrders()
+    }
+
     fun getAllOrders(): LiveData<List<Order>> {
         return repository.getAllOrders()
     }

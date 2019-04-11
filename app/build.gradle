@@ -59,13 +59,13 @@ dependencies {
     kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
 
     //AppCompat
-    implementation 'androidx.appcompat:appcompat:1.1.0-alpha02'
+    implementation 'androidx.appcompat:appcompat:1.1.0-alpha03'
 
     // Material Design
     implementation 'com.google.android.material:material:1.0.0'
 
     // Core
-    implementation 'androidx.core:core-ktx:1.1.0-alpha04'
+    implementation 'androidx.core:core-ktx:1.1.0-alpha05'
 
     // CardView
     implementation 'androidx.cardview:cardview:1.0.0'
@@ -75,25 +75,32 @@ dependencies {
 
 
     // Koin (Dependeny Injection)
-    def koin_version = "2.0.0-beta-1"
+    def koin_version = "2.0.0-beta-4"
     implementation "org.koin:koin-android:$koin_version"
     implementation "org.koin:koin-androidx-scope:$koin_version"
     implementation "org.koin:koin-androidx-viewmodel:$koin_version"
     testImplementation "org.koin:koin-test:$koin_version"
+    androidTestImplementation "org.koin:koin-test:$koin_version"
 
-    // Test
 
-    // Core library
+    // TESTING DEPENDENCIES
+
+    // JUnit 4 framework
+    //testImplementation 'junit:junit:4.12'
+
+    // Core library. Robolectric environment
+    testImplementation 'androidx.test:core:1.1.0'
     androidTestImplementation 'androidx.test:core:1.1.0'
 
-    // AndroidJUnitRunner and JUnit Rules
-    androidTestImplementation 'androidx.test:runner:1.1.1'
-    androidTestImplementation 'androidx.test:rules:1.1.1'
+    // Mockito
+    testImplementation 'org.mockito:mockito-core:2.23.0'
 
-    // Assertions
+    // JUnit and Assertions
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
-//    androidTestImplementation 'androidx.test.ext:truth:1.1.0'
-//    androidTestImplementation 'com.google.truth:truth:0.42'
+    androidTestImplementation 'androidx.test.ext:truth:1.1.0'
+    androidTestImplementation 'com.google.truth:truth:0.42'
+
+
 
     // Espresso dependencies
     def espresso_version = "3.1.1"
