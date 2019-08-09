@@ -1,27 +1,28 @@
 package com.nuction.orderix
 
-import androidx.room.Room
-import androidx.test.platform.app.InstrumentationRegistry
-import com.nuction.orderix.data.AppDatabase
-import com.nuction.orderix.data.Order
-import com.nuction.orderix.data.OrderRepository
-import com.nuction.orderix.data.OrderRepositoryImpl
-import com.nuction.orderix.di.appModule
-import com.nuction.orderix.viewmodels.OrderViewModel
-import org.junit.After
-import org.junit.Assert
-import org.junit.Before
+//import androidx.room.Room
+//import androidx.test.platform.app.InstrumentationRegistry
+//import com.nuction.orderix.data.AppDatabase
+//import com.nuction.orderix.data.Order
+//import com.nuction.orderix.data.OrderRepository
+//import com.nuction.orderix.data.OrderRepositoryImpl
+//import com.nuction.orderix.di.appModule
+//import com.nuction.orderix.viewmodels.OrderViewModel
+//import org.junit.After
+//import org.junit.Assert
+//import org.junit.Before
+//
+//import org.koin.android.ext.koin.androidApplication
+//import org.koin.core.context.startKoin
+//import org.koin.core.context.stopKoin
+//import org.koin.dsl.koinApplication
+//import org.koin.dsl.module
+//
+//import org.koin.test.KoinTest
+//import org.koin.test.check.checkModules
+//import org.koin.test.inject
 import org.junit.Test
-import org.koin.android.ext.koin.androidApplication
-import org.koin.core.context.startKoin
-import org.koin.core.context.stopKoin
-import org.koin.dsl.koinApplication
-import org.koin.dsl.module
 import org.koin.test.AutoCloseKoinTest
-import org.koin.test.KoinTest
-import org.koin.test.check.checkModules
-import org.koin.test.inject
-
 
 
 class OrderViewModelTest: AutoCloseKoinTest() {

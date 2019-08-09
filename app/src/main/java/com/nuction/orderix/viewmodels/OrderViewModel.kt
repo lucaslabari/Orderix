@@ -1,12 +1,20 @@
 package com.nuction.orderix.viewmodels
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.nuction.orderix.data.Order
 import com.nuction.orderix.data.OrderRepository
 
 
 class OrderViewModel(private val repository: OrderRepository) : ViewModel() {
+
+    private val myOrders: LiveData<List<Order>>
+
+    init {
+        myOrders = repository.getAllOrders()
+    }
+
 
     fun insert(order: Order) {
         repository.insert(order)
@@ -20,11 +28,11 @@ class OrderViewModel(private val repository: OrderRepository) : ViewModel() {
         repository.delete(order)
     }
 
-    fun deleteAllOrders() {
-        repository.deleteAllOrders()
-    }
+//    fun deleteAllOrders() {
+//        repository.deleteAllOrders()
+//    }
 
     fun getAllOrders(): LiveData<List<Order>> {
-        return repository.getAllOrders()
+        return myOrders
     }
 }

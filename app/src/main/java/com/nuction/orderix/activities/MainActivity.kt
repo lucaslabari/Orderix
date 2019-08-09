@@ -1,30 +1,30 @@
 package com.nuction.orderix.activities
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.nuction.orderix.R
-import com.nuction.orderix.data.Order
-import com.nuction.orderix.utils.Constants
-import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
+import com.nuction.orderix.R
 import com.nuction.orderix.adapters.OrderAdapter
+import com.nuction.orderix.data.Order
+import com.nuction.orderix.utils.Constants
 import com.nuction.orderix.viewmodels.OrderViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -161,7 +161,9 @@ class MainActivity : AppCompatActivity(), OrderAdapter.OnItemClickListener,
     /**
      * Activity result callback
      **/
+    @SuppressLint("MissingSuperCall")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
         if (resultCode == Activity.RESULT_OK) {
             val order = data?.getParcelableExtra<Order>(Constants.INTENT_OBJECT)!!
             when (requestCode) {
